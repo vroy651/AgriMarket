@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>My Sales</h1>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Buyer</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+          <th>Status</th>
+          <th>Date Ordered</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.buyer.username }}</td>
+            <td><a href="{% url 'marketplace:product_detail' slug=order.product.slug %}">{{ order.product.name }}</a></td>
+            <td>{{ order.quantity }}</td>
+            <td>${{ order.total_price }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.created_at }}</td>
+            <td><a href="{% url 'marketplace:order_detail' order_id=order.id %}" class="btn btn-sm btn-outline-info">View Details</a></td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="8">You have no sales yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

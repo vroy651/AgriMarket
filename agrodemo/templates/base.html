@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AgroLand - Connecting farmers and buyers for better agricultural trade">
+    <title>{% block title %}AgroLand{% endblock %} - Agricultural Marketplace</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background: linear-gradient(to right, #2c5e1e, #4a8c3f);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand img {
+            height: 35px;
+            width: auto;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .btn-success {
+            background-color: #2c5e1e;
+            border-color: #2c5e1e;
+        }
+
+        .btn-success:hover {
+            background-color: #224a17;
+            border-color: #224a17;
+        }
+
+        .dropdown-menu {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: #1a1a1a;
+        }
+
+        .social-links a {
+            color: #ffffff;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #4a8c3f;
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="AgroLand Logo">
+            AgroLand
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Left Navigation -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <!-- Marketplace Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-store"></i> Marketplace
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="marketplaceDropdown">
+                        <li><a class="dropdown-item" href="/marketplace">Browse All</a></li>
+                        <li><a class="dropdown-item" href="/categories">Categories</a></li>
+                        {% if user.is_authenticated %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/marketplace/my-products">My Products</a></li>
+                            <li><a class="dropdown-item" href="/marketplace/add-products">Add Product</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <!-- Tools Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-tools"></i> Farmer Tools
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="toolsDropdown">
+                      <li><a class="dropdown-item {% if active_tab == 'weather' %}active{% endif %}" 
+                            href="{% url 'marketplace:weather' %}">Weather Forecast</a></li>
+                      <li><a class="dropdown-item {% if active_tab == 'crop_calendar' %}active{% endif %}" 
+                            href="{% url 'marketplace:crop_calendar' %}">Crop Calendar</a></li>
+                      <li><a class="dropdown-item {% if active_tab == 'market_prices' %}active{% endif %}" 
+                            href="{% url 'marketplace:market_prices' %}">Market Prices</a></li>
+                      <li><a class="dropdown-item {% if active_tab == 'pest_tracker' %}active{% endif %}" 
+                            href="{% url 'marketplace:pest_tracker' %}">Pest & Disease Tracker</a></li>
+                  </ul>
+                </li>
+                <!-- Knowledge Base Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="knowledgeDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-book"></i> Knowledge Base
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="knowledgeDropdown">
+                        <li><a class="dropdown-item" href="/farming_tips">Farming Tips</a></li>
+                        <li><a class="dropdown-item" href="/community">Community Forum</a></li>
+                        <li><a class="dropdown-item" href="/blog">Blog</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Right Navigation -->
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <!-- Cart -->
+                    <li class="nav-item me-2">
+                        <a href="/cart" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger">{{ cart_count }}</span>
+                        </a>
+                    </li>
+                    <!-- Notifications -->
+                    <li class="nav-item me-2">
+                        <a href="/notifications" class="nav-link">
+                            <i class="fas fa-bell"></i>
+                            {% if unread_notifications_count %}
+                                <span class="badge bg-danger">{{ unread_notifications_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <!-- User Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="/dashboard">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                            <li><a class="dropdown-item" href="/profile">
+                                <i class="fas fa-user"></i> My Profile</a></li>
+                            <li><a class="dropdown-item" href="orders">
+                                <i class="fas fa-shopping-bag"></i> My Orders</a></li>
+                            {% if user.is_seller %}
+                                <li><a class="dropdown-item" href="/seller_orders">
+                                    <i class="fas fa-clipboard-list"></i> Seller Orders</a></li>
+                                <li><a class="dropdown-item" href="/inventory_management">
+                                    <i class="fas fa-boxes"></i> Inventory</a></li>
+                                <li><a class="dropdown-item" href="/sales_analytics">
+                                    <i class="fas fa-chart-line"></i> Analytics</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                {% comment %} <form method="post" action="/logout">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </button>
+                                </form> {% endcomment %}
+
+                                <form method="post" action="{% url 'logout' %}" class="dropdown-item p-0">
+                                  {% csrf_token %}
+                                  <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <!-- Messages Section -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-info-circle"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="container py-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-light py-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5>About AgroLand</h5>
+                    <p>Empowering farmers and buyers through direct trade. We're committed to sustainable agriculture and fair pricing.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/about" class="text-light text-decoration-none"><i class="fas fa-angle-right"></i> About Us</a></li>
+                        <li><a href="/contact" class="text-light text-decoration-none"><i class="fas fa-angle-right"></i> Contact</a></li>
+                        <li><a href="/faq" class="text-light text-decoration-none"><i class="fas fa-angle-right"></i> FAQ</a></li>
+                        <li><a href="/blog" class="text-light text-decoration-none"><i class="fas fa-angle-right"></i> Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Information</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> support@agroland.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Farming Street, Agricultural District</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; {% now "Y" %} AgroLand. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="/privacy" class="text-light text-decoration-none me-3">Privacy Policy</a>
+                    <a href="/terms" class="text-light text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{% block title %}FarmLand - Empowering Farmers{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">FarmLand</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <!-- Left Section: Navigation Links -->
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/marketplace">Marketplace</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/farming-tips">Farming Tips</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/create-post">Create Post</a>
+            </li>
+          </ul>
+
+          <!-- Right Section: User Actions -->
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+              <!-- Add Product Button -->
+              <li class="nav-item me-2">
+                <a href="/marketplace/add-products" class="btn btn-success">Add Product</a>
+              </li>
+              <!-- User Dropdown -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ user.username }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                  <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+                  <li><a class="dropdown-item" href="/orders">My Orders</a></li>
+                  <li><a class="dropdown-item" href="/marketplace/my-products">My Products</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <form method="post" action="{% url 'logout' %}" class="dropdown-item p-0">
+                      {% csrf_token %}
+                      <button type="submit" class="dropdown-item">Logout</button>
+                    </form>
+                  </li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/signup">Sign Up</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Messages Section -->
+    <div class="container mt-4">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+      {% block content %}
+        <div class="alert alert-info" role="alert">
+          Welcome to FarmLand! Explore the marketplace and farming tips to empower your agriculture journey.
+        </div>
+      {% endblock content %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light text-center py-3 mt-5">
+      <div class="container">
+        <p>&copy; 2024 FarmLand. All Rights Reserved.</p>
+        <p>
+          <a href="/about" class="text-light text-decoration-none">About Us</a> |
+          <a href="/contact" class="text-light text-decoration-none">Contact</a> |
+          <a href="/privacy" class="text-light text-decoration-none">Privacy Policy</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap Scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html> {% endcomment %}
+
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}FarmLand - Empowering Farmers{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Custom CSS (optional, can use to override bootstrap styling) -->
+    <style>
+         body {
+            background-color: #f8f9fa;
+        }
+        .navbar .dropdown-menu {
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+        .navbar .dropdown-item:hover {
+            background-color: #f8f9fa; /* Lighter hover color for readability */
+        }
+         .navbar-brand {
+            font-size: 1.75rem;
+             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+         .navbar-brand img {
+             max-height: 30px; /* Set your preferred height */
+        }
+
+        footer {
+            background-color: #343a40;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="https://placeholder.com/wp-content/uploads/2018/10/placeholder-logo-1.png" alt="FarmLand Logo" >
+                FarmLand
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <!-- Left Section: Navigation Links -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/marketplace">Marketplace</a>
+                    </li>
+                   <li class="nav-item">
+                        <a class="nav-link" href="/farming-tips">Farming Tips</a>
+                    </li>
+                   <li class="nav-item">
+                         <a class="nav-link" href="/create-post">Create Post</a>
+                   </li>
+                </ul>
+
+                 <!-- Right Section: User Actions -->
+                 <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                         <!-- Add Product Button -->
+                        <li class="nav-item me-2">
+                           <a href="/marketplace/add-products" class="btn btn-success btn-sm">Add Product</a>
+                       </li>
+                        <!-- User Dropdown -->
+                       <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+                                <li><a class="dropdown-item" href="/orders">My Orders</a></li>
+                                <li><a class="dropdown-item" href="/marketplace/my-products">My Products</a></li>
+                                <li>
+                                   <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form method="post" action="{% url 'logout' %}" class="dropdown-item p-0">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signup">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Messages Section -->
+    <div class="container mt-4">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <!-- Main Content -->
+    <main class="container mt-4">
+        {% block content %}
+            <div class="alert alert-info" role="alert">
+                Welcome to FarmLand! Explore the marketplace and farming tips to empower your agriculture journey.
+            </div>
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+   <footer class="bg-dark text-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-2">© 2024 FarmLand. All Rights Reserved.</p>
+           <nav class="d-inline-block">
+                 <a href="/about" class="text-light text-decoration-none mx-2">About Us</a>
+                <a href="/contact" class="text-light text-decoration-none mx-2">Contact</a>
+                <a href="/privacy" class="text-light text-decoration-none mx-2">Privacy Policy</a>
+                <a href="/terms" class="text-light text-decoration-none mx-2">Terms of Service</a>
+                 <a href="/faq" class="text-light text-decoration-none mx-2">FAQ</a>
+            </nav>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html> {% endcomment %}

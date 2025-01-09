@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container py-5">
+        <h1 class="mb-4  aria-hidden ">Marketplace</h1>
+
+         <div class="mb-4">
+             <form method="get" class="row row-cols-lg-auto g-3 align-items-center">
+                <div class="col-12">
+                   {{ search_form.search_query }}
+                </div>
+                 <div class="col-12">
+                      {{ search_form.category }}
+                 </div>
+                 <div class="col-12">
+                   <div class="input-group">
+                      <span class="input-group-text">Min</span>
+                       {{ search_form.min_price }}
+                    </div>
+                 </div>
+                 <div class="col-12">
+                     <div class="input-group">
+                       <span class="input-group-text">Max</span>
+                        {{ search_form.max_price }}
+                     </div>
+                 </div>
+                <div class="col-12">
+                    {{ search_form.sort_by }}
+                </div>
+                  <div class="col-12">
+                     <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+             </form>
+         </div>
+
+        {% if page_obj %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                {% for product in page_obj %}
+                     <div class="col">
+                            <div class="card shadow h-100">
+                                {% if product.images.first %}
+                                     <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="card-img-top img-fluid" style="object-fit: cover; height: 200px;">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/300x200" alt="Placeholder" class="card-img-top img-fluid" style="object-fit: cover; height: 200px;">
+                                {% endif %}
+
+                                  <div class="card-body d-flex flex-column">
+                                     <h5 class="card-title">
+                                        <a href="{% url 'marketplace:product_detail' slug=product.slug %}" class="text-decoration-none text-dark">
+                                             {{ product.name }}
+                                        </a>
+                                     </h5>
+                                        <p class="card-text"><span class="fw-bold">Price:</span> ${{ product.price }}</p>
+                                        <p class="card-text"><span class="fw-bold">Category:</span> {{ product.category.name }}</p>
+                                        <p class="card-text"><span class="fw-bold">Stock:</span> {{ product.stock }}</p>
+                                          <p class="card-text"><span class="fw-bold">Views:</span> {{ product.views }}</p>
+                                         <p class="card-text"><span class="fw-bold">Added at:</span> {{ product.created_at }}</p>
+                                  </div>
+                            </div>
+                    </div>
+                 {% endfor %}
+            </div>
+
+            {% if page_obj.has_other_pages %}
+                <nav aria-label="Page navigation">
+                   <ul class="pagination justify-content-center mt-4">
+                     {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                             <span aria-hidden="true">«</span>
+                            </a>
+                       </li>
+                      {% endif %}
+
+                    {% for page_num in page_obj.paginator.page_range %}
+                       <li class="page-item {% if page_obj.number == page_num %}active{% endif %}">
+                           <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                       </li>
+                    {% endfor %}
+
+                     {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">»</span>
+                          </a>
+                         </li>
+                      {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+       {% else %}
+           <p>No products found.</p>
+       {% endif %}
+    </div>
+{% endblock %}
+

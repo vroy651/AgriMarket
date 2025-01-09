@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-4 px-4">
+    <div class="card shadow-lg border-0 rounded-lg">
+        <!-- Header -->
+        <div class="card-header bg-gradient-to-r from-green-600 to-green-700 border-0 rounded-top">
+            <div class="d-flex align-items-center py-3">
+                <i class="fas fa-leaf text-white fa-2x me-3"></i>
+                <h2 class="text-white mb-0 fw-bold">Pest & Disease Tracker</h2>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <!-- Selection Controls -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <label class="form-label fw-semibold mb-2">Crop Category</label>
+                        <select class="form-select form-select-lg shadow-sm" name="crop_category" required>
+                            <option value="" selected disabled>Select Crop Category</option>
+                            <optgroup label="Cereals">
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="corn">Corn</option>
+                                <option value="barley">Barley</option>
+                            </optgroup>
+                            <optgroup label="Vegetables">
+                                <option value="tomato">Tomato</option>
+                                <option value="potato">Potato</option>
+                                <option value="cabbage">Cabbage</option>
+                                <option value="carrot">Carrot</option>
+                            </optgroup>
+                            <optgroup label="Fruits">
+                                <option value="apple">Apple</option>
+                                <option value="mango">Mango</option>
+                                <option value="grape">Grape</option>
+                                <option value="orange">Orange</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold mb-2">Region</label>
+                        <select class="form-select form-select-lg shadow-sm" name="region" required>
+                            <option value="" selected disabled>Select Region</option>
+                            <option value="north">North Region - High Risk</option>
+                            <option value="south">South Region - Medium Risk</option>
+                            <option value="east">East Region - Low Risk</option>
+                            <option value="west">West Region - Medium Risk</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Image Upload Section -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <div class="card shadow-sm border-1">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-database text-primary me-2"></i>
+                                    <h5 class="card-title mb-0 fw-bold">Soil Sample</h5>
+                                </div>
+                                <div class="upload-zone p-4 bg-light rounded border-2 border-dashed position-relative">
+                                    <input type="file" name="soilImage" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" accept="image/*">
+                                    <div class="text-center">
+                                        <i class="fas fa-upload fa-2x text-muted mb-2"></i>
+                                        <p class="mb-0 text-muted">Drop soil image here or click to upload</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-1">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-leaf text-success me-2"></i>
+                                    <h5 class="card-title mb-0 fw-bold">Leaf Sample</h5>
+                                </div>
+                                <div class="upload-zone p-4 bg-light rounded border-2 border-dashed position-relative">
+                                    <input type="file" name="leafImage" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" accept="image/*">
+                                    <div class="text-center">
+                                        <i class="fas fa-upload fa-2x text-muted mb-2"></i>
+                                        <p class="mb-0 text-muted">Drop leaf image here or click to upload</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg px-4 mb-4 w-100 w-md-auto">
+                    <i class="fas fa-microscope me-2"></i>Analyze Samples
+                </button>
+
+                <!-- Results Section -->
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                                    <h5 class="card-title mb-0 fw-bold">Active Threats</h5>
+                                </div>
+                                <div class="threats-list">
+                                    <!-- Pest Threat -->
+                                    <div class="threat-item mb-3 pb-3 border-bottom">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="d-flex align-items-center">
+                                                    <i class="fas fa-bug text-danger me-2"></i>
+                                                    Fall Armyworm
+                                                </h6>
+                                                <p class="text-muted mb-2 small">Invasive pest affecting multiple crops</p>
+                                                <span class="badge bg-danger">High Risk</span>
+                                                <span class="badge bg-secondary ms-2">North Region</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Disease Threat -->
+                                    <div class="threat-item">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="d-flex align-items-center">
+                                                    <i class="fas fa-virus text-warning me-2"></i>
+                                                    Leaf Blight
+                                                </h6>
+                                                <p class="text-muted mb-2 small">Fungal disease affecting crop leaves</p>
+                                                <span class="badge bg-warning text-dark">Medium Risk</span>
+                                                <span class="badge bg-secondary ms-2">South Region</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-robot text-primary me-2"></i>
+                                    <h5 class="card-title mb-0 fw-bold">ML Model Predictions</h5>
+                                </div>
+                                {% if prediction_results %}
+                                    <div class="alert alert-info mb-0">
+                                        {{ prediction_results|linebreaks }}
+                                    </div>
+                                {% else %}
+                                    <div class="text-center text-muted py-5">
+                                        <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                                        <p class="mb-0">Upload samples to get AI-powered predictions</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .upload-zone {
+        transition: all 0.3s ease;
+        border: 2px dashed #dee2e6;
+        cursor: pointer;
+    }
+    
+    .upload-zone:hover {
+        border-color: #198754;
+        background-color: #f8f9fa;
+    }
+    
+    .threat-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+    
+    .badge {
+        font-weight: 500;
+        padding: 0.5em 0.8em;
+    }
+    
+    .card {
+        transition: transform 0.2s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .form-select {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .bg-gradient-to-r {
+        background: linear-gradient(to right, #28a745, #20c997);
+    }
+    
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // File upload visual feedback
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(input => {
+        input.addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            const uploadZone = this.closest('.upload-zone');
+            const textElement = uploadZone.querySelector('p');
+            
+            if (fileName) {
+                textElement.textContent = fileName;
+                uploadZone.classList.add('border-success');
+            } else {
+                textElement.textContent = 'Drop image here or click to upload';
+                uploadZone.classList.remove('border-success');
+            }
+        });
+    });
+
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+});
+</script>
+{% endblock %}

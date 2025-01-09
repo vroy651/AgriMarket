@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    .calendar-container {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+
+    .season-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .season-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .spring-header {
+        background: linear-gradient(135deg, #67B26F, #4ca2cd);
+    }
+
+    .summer-header {
+        background: linear-gradient(135deg, #f12711, #f5af19);
+    }
+
+    .autumn-header {
+        background: linear-gradient(135deg, #FF8008, #FFC837);
+    }
+
+    .winter-header {
+        background: linear-gradient(135deg, #1d976c, #93F9B9);
+    }
+
+    .crop-item {
+        border-left: 4px solid #4CAF50;
+        margin-bottom: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .crop-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .search-box {
+        border-radius: 20px;
+        border: 2px solid #e9ecef;
+        padding: 10px 20px;
+        transition: all 0.3s ease;
+    }
+
+    .search-box:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+    }
+
+    .filter-dropdown {
+        border-radius: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="calendar-container">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h1 class="text-center mb-4">
+                    <i class="fas fa-calendar-alt text-success me-2"></i>
+                    Agricultural Crop Calendar
+                </h1>
+                <p class="text-center text-muted">
+                    Plan your farming activities throughout the year with our seasonal crop guide
+                </p>
+            </div>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <input type="text" 
+                       class="form-control search-box" 
+                       placeholder="Search crops..."
+                       id="cropSearch">
+            </div>
+            <div class="col-md-3 mb-3 mb-md-0">
+                <select class="form-select filter-dropdown" id="regionFilter">
+                    <option value="">All Regions</option>
+                    <option value="north">Northern Region</option>
+                    <option value="south">Southern Region</option>
+                    <option value="east">Eastern Region</option>
+                    <option value="west">Western Region</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select filter-dropdown" id="cropTypeFilter">
+                    <option value="">All Crop Types</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="grains">Grains</option>
+                    <option value="pulses">Pulses</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Seasonal Cards -->
+        <div class="row">
+            <!-- Spring Season -->
+            <div class="col-md-6 mb-4">
+                <div class="card season-card">
+                    <div class="card-header spring-header text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-seedling me-2"></i>
+                            Spring (March - May)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="crop-list">
+                            <div class="crop-item p-3">
+                                <h5 class="mb-1">Wheat</h5>
+                                <p class="mb-2 text-muted">Planting Period: Early March</p>
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" style="width: 75%"></div>
+                                </div>
+                                <small class="text-muted">Ideal Temperature: 20-25°C</small>
+                            </div>
+                            <!-- Add more spring crops as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summer Season -->
+            <div class="col-md-6 mb-4">
+                <div class="card season-card">
+                    <div class="card-header summer-header text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-sun me-2"></i>
+                            Summer (June - August)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="crop-list">
+                            <div class="crop-item p-3">
+                                <h5 class="mb-1">Rice</h5>
+                                <p class="mb-2 text-muted">Planting Period: Early June</p>
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" style="width: 85%"></div>
+                                </div>
+                                <small class="text-muted">Ideal Temperature: 25-30°C</small>
+                            </div>
+                            <!-- Add more summer crops as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Autumn Season -->
+            <div class="col-md-6 mb-4">
+                <div class="card season-card">
+                    <div class="card-header autumn-header text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-leaf me-2"></i>
+                            Autumn (September - November)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="crop-list">
+                            <div class="crop-item p-3">
+                                <h5 class="mb-1">Potatoes</h5>
+                                <p class="mb-2 text-muted">Planting Period: Early September</p>
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" style="width: 65%"></div>
+                                </div>
+                                <small class="text-muted">Ideal Temperature: 15-20°C</small>
+                            </div>
+                            <!-- Add more autumn crops as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Winter Season -->
+            <div class="col-md-6 mb-4">
+                <div class="card season-card">
+                    <div class="card-header winter-header text-white">
+                        <h3 class="mb-0">
+                            <i class="fas fa-snowflake me-2"></i>
+                            Winter (December - February)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="crop-list">
+                            <div class="crop-item p-3">
+                                <h5 class="mb-1">Peas</h5>
+                                <p class="mb-2 text-muted">Planting Period: Early December</p>
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" style="width: 70%"></div>
+                                </div>
+                                <small class="text-muted">Ideal Temperature: 10-15°C</small>
+                            </div>
+                            <!-- Add more winter crops as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Search functionality
+    document.getElementById('cropSearch').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const cropItems = document.querySelectorAll('.crop-item');
+        
+        cropItems.forEach(item => {
+            const cropName = item.querySelector('h5').textContent.toLowerCase();
+            if (cropName.includes(searchTerm)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    // Filter functionality
+    function applyFilters() {
+        const region = document.getElementById('regionFilter').value;
+        const cropType = document.getElementById('cropTypeFilter').value;
+        // Add filter logic here
+    }
+
+    document.getElementById('regionFilter').addEventListener('change', applyFilters);
+    document.getElementById('cropTypeFilter').addEventListener('change', applyFilters);
+</script>
+{% endblock %}
+{% endblock %}

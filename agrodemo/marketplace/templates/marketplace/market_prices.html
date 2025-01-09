@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Market Prices</h2>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Search products...">
+            </div>
+            <div class="col">
+                <select class="form-select">
+                    <option selected>Select Market</option>
+                    <option>Market 1</option>
+                    <option>Market 2</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Market</th>
+                        <th>Price (per unit)</th>
+                        <th>Last Updated</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Add dynamic market price data here -->
+                    <tr>
+                        <td>Sample Product</td>
+                        <td>Sample Market</td>
+                        <td>$0.00</td>
+                        <td>2024-01-01</td>
+                        <td>↑</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

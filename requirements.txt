@@ -1,0 +1,64 @@
+# Web Framework and API
+fastapi==0.109.0         # Updated for Python 3.12 compatibility
+uvicorn==0.27.0          # Latest version with Python 3.12 support
+python-multipart==0.0.7  # Updated version for file handling
+pydantic==2.5.3          # Latest version with full Python 3.12 support
+
+# Database and ORM
+sqlalchemy==2.0.25       # Latest version with Python 3.12 support
+alembic==1.13.1          # Updated for SQLAlchemy 2.0 compatibility
+psycopg2-binary==2.9.9   # Maintained version for Python 3.12
+python-jose==3.3.0       # JWT handling (Python 3.12 compatible)
+passlib==1.7.4           # Password hashing (Python 3.12 compatible)
+
+# Machine Learning and Image Processing
+tensorflow               # Latest version with initial Python 3.12 support
+numpy==1.26.3            # Updated for Python 3.12
+pandas==2.2.0            # Latest version with Python 3.12 support
+pillow==10.2.0           # Updated for Python 3.12
+scikit-learn==1.4.0      # Latest version with Python 3.12 support
+opencv-python==4.9.0.80  # Updated for Python 3.12
+
+# Weather and Environmental Data
+requests==2.31.0         # Latest stable version (Python 3.12 compatible)
+python-dateutil==2.8.2   # Stable version (Python 3.12 compatible)
+pytz==2024.1             # Latest version for timezone handling
+
+# # Monitoring and Logging
+# prometheus-client   # Updated for Python 3.12
+# python-logging-json  # Compatible with Python 3.12
+# sentry-sdk         # Latest version with Python 3.12 support
+
+# Testing
+pytest==7.4.4           # Latest version with Python 3.12 support
+pytest-asyncio==0.23.3  # Updated for Python 3.12
+httpx==0.26.0           # Latest version with Python 3.12 support
+pytest-cov==4.1.0       # Latest version (Python 3.12 compatible)
+
+# Development Tools
+black==23.12.1          # Latest version with Python 3.12 support
+flake8==7.0.0           # Updated for Python 3.12
+isort==5.13.2           # Latest version with Python 3.12 support
+mypy==1.8.0             # Updated for Python 3.12
+pylint==3.0.3           # Latest version with Python 3.12 support
+
+# Production Dependencies
+gunicorn==21.2.0        # Latest stable version (Python 3.12 compatible)
+redis==5.0.1            # Stable version (Python 3.12 compatible)
+celery==5.3.6           # Latest version with Python 3.12 support
+supervisor              # Stable version, version removed for flexibility
+
+# Core Data Processing and Analysis
+
+# Model Persistence
+joblib==1.2.0
+
+# Visualization (optional, for model analysis)
+matplotlib==3.7.1
+seaborn==0.12.2
+
+# Type Checking (optional, for development)
+
+
+# Logging and Debugging
+python-json-logger==2.0.7
