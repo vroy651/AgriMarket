@@ -1,0 +1,301 @@
+/* src/components/styles/LoginPage.css */
+
+.min-h-screen {
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Very light gray */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.bg-opacity-90 {
+  background-color: rgba(255, 255, 255, 0.95); /* Less transparent white */
+}
+
+.backdrop-blur-sm {
+    backdrop-filter: blur(12px); /* Increased blur */
+}
+
+.rounded-lg {
+  border-radius: 12px; /* More rounded */
+}
+
+.shadow-md {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* More defined shadow */
+}
+
+.p-8 {
+  padding: 40px; /* Padding for spacing */
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-8 {
+  margin-bottom: 30px;
+}
+
+.text-2xl {
+  font-size: 28px;
+    line-height: 1.3;
+  letter-spacing: -0.05px;
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
+.mb-2 {
+  margin-bottom: 10px;
+}
+
+.text-gray-700 {
+    color: #4a5568; /* Default text color */
+}
+
+.text-green-700 {
+    color: #28a745; /* Agriculture-themed green */
+}
+
+
+.mb-6 {
+    margin-bottom: 24px;
+}
+
+
+.p-4 {
+  padding: 14px;
+}
+
+
+.bg-red-100 {
+    background-color: #fdeeee; /* Soft red for errors */
+}
+
+
+.border {
+  border-width: 1px;
+}
+
+
+.border-red-400 {
+    border-color: #e57373; /* Subtle error border */
+}
+
+
+.text-red-700 {
+    color: #d32f2f; /* Clear error text */
+}
+
+
+.rounded-md {
+  border-radius: 8px; /* Slight round for form element */
+}
+
+
+.space-y-6 > * + * {
+  margin-top: 20px;
+}
+
+.block {
+  display: block;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.px-3 {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+
+.py-2 {
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+
+
+.border-gray-300 {
+    border-color: #e0e0e0;
+}
+
+.focus:outline-none {
+  outline: 0;
+}
+
+.focus:ring-2 {
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.3); /* Green focus ring */
+}
+
+.focus:ring-green-500 {
+  --ring-color: #28a745; /* Correct focus green */
+}
+
+
+.focus:border-transparent {
+  border-color: transparent;
+}
+
+
+.bg-green-600 {
+    background-color: #28a745; /* Agriculture-themed green */
+    transition: background-color 0.3s ease; /* smooth transition */
+}
+
+.text-white {
+  color: #fff;
+}
+
+
+.hover\:bg-green-700:hover {
+    background-color: #1e7e34; /* Darker green on hover */
+}
+
+
+.focus\:ring-offset-2 {
+  --ring-offset-width: 2px;
+}
+
+
+.disabled\:opacity-50:disabled {
+  opacity: 0.6;
+}
+
+
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}
+
+
+.transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.2s;
+}
+
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.mr-2 {
+  margin-right: 10px;
+}
+
+.h-4 {
+  height: 18px;
+}
+
+.w-4 {
+  width: 18px;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.mt-6 {
+  margin-top: 24px;
+}
+
+.text-gray-600 {
+  color: #718096; /* Gray for links */
+}
+
+
+.hover\:text-gray-900:hover {
+  color: #2d3748;
+}
+
+.text-green-600 {
+  color: #28a745; /*  green for links */
+  transition: color 0.2s ease;
+}
+
+
+.hover\:text-green-800:hover {
+  color: #1e7e34;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+/* Input Field Styling */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Smooth transitions */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Button Styling */
+button {
+  cursor: pointer;
+}
+
+/* Link Styling */
+.text-green-600,
+.text-gray-600 {
+  text-decoration: none; /* Remove underline from links */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .p-8 {
+    padding: 30px;
+  }
+
+  .text-2xl {
+    font-size: 24px;
+  }
+}
+
+/* Reduce the maximum width of the login card */
+.w-full.max-w-md {
+  max-width: 450px; /* Adjusted for better appearance */
+}

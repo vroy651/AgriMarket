@@ -1,0 +1,166 @@
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f8f4; /* Very light green background */
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensures content takes at least the full viewport height */
+  transition: background-color 0.3s ease;
+}
+
+.auth-page {
+  background: #fff;
+  padding: 30px; /* Reduced padding for smaller size */
+  border-radius: 10px; /* Slightly smaller radius */
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12); /* Adjusted shadow */
+  width: 90%;
+  max-width: 450px; /* Reduced max-width */
+  transition: transform 0.3s ease;
+  position: relative;
+  margin: 20px; /* Add some margin for space on edges */
+}
+
+.auth-page:hover {
+  transform: scale(1.01); /* Slight scaling on hover */
+}
+
+.auth-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px; /* Reduced header height */
+    background: linear-gradient(to right, #8fce98, #6aa36d); /* Light green gradient */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+.auth-page h2 {
+  text-align: center;
+  margin-bottom: 20px; /* Reduced margin */
+  color: #2c3e50;
+  font-size: 1.7em; /* Slightly smaller font */
+  letter-spacing: 0.4px;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 18px; /* Reduced margin */
+  border: 1px solid #f5c6cb;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form Styles */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 18px; /* Reduced margin */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px; /* Reduced margin */
+  font-weight: 500;
+    color: #444;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px; /* Reduced padding */
+  border: 1px solid #ddd;
+  border-radius: 5px; /* Slightly smaller radius */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f9f9f9;
+    color: #444;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #6aa36d; /* Focused green */
+  box-shadow: 0 0 6px rgba(106, 163, 109, 0.3); /* Green box shadow */
+  background-color: #fff;
+}
+
+/* Button Styles */
+.button {
+    background-color: #8fce98;
+  color: #fff;
+  padding: 10px 15px; /* Reduced padding */
+  border: none;
+  border-radius: 5px; /* Slightly smaller radius */
+  cursor: pointer;
+  font-size: 1em; /* Reduced font size */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px; /* Reduced margin */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Adjusted shadow */
+}
+
+.button:hover {
+    background-color: #6aa36d;
+  transform: translateY(-1px); /* Reduced lift */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25); /* Adjusted shadow */
+}
+
+.button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.button-loading {
+  display: flex;
+  align-items: center;
+}
+
+/* Loader */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .auth-page {
+    padding: 20px;
+      margin: 10px;
+  }
+    .auth-page h2{
+        font-size: 1.5em;
+    }
+}

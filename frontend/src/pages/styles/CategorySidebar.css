@@ -1,0 +1,39 @@
+.category-sidebar {
+    background-color: #f8f9fa; /* Light grey background */
+    border-right: 1px solid #dee2e6; /* Subtle border */
+    padding: 20px;
+    width: 250px; /* Adjust width as needed */
+    box-sizing: border-box; /* Include padding in width */
+    font-family: sans-serif; /* Set a nice font family */
+    
+  }
+  
+  .category-sidebar h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #343a40; /* Darker heading color */
+  }
+  
+  .category-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .category-sidebar li {
+    margin-bottom: 8px;
+  }
+  
+  .category-sidebar a {
+    display: block; /* Take up full width of li */
+    padding: 10px;
+    text-decoration: none;
+    color: #495057;
+    border-radius: 4px; /* Slightly rounded corners */
+    transition: background-color 0.2s ease; /* Smooth hover */
+  }
+  
+  .category-sidebar a:hover {
+    background-color: #e9ecef; /* Light grey hover */
+    color: #212529;
+  }

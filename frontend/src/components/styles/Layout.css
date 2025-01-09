@@ -1,0 +1,115 @@
+/* Layout.css */
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  .main-content {
+    flex: 1 0 auto;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in;
+  }
+  
+  /* Error Boundary Styles */
+  .error-container {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    background-color: #fff3f3;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .error-container h1 {
+    color: #e53e3e;
+    margin-bottom: 1rem;
+  }
+  
+  /* Loading Spinner Styles */
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Scroll to Top Button */
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    opacity: 0.7;
+  }
+  
+  .scroll-to-top:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    opacity: 1;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 1rem;
+    }
+  
+    .scroll-to-top {
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+  
+  /* Print Styles */
+  @media print {
+    .scroll-to-top {
+      display: none;
+    }
+  
+    .main-content {
+      padding: 0;
+    }
+  }
